@@ -14,6 +14,16 @@ exports.register = async (req, res) => {
     if (role !== "admin" && role !== "teacher") {
       return res.status(403).json({ message: "Invalid role." });
     }
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+    const user = new User({
+      username: req.body.username,
+      password: hashedPassword,
+      role: req.body.role,
+    });
+    await user.save();
+    res.status(201).json({ message: "User Registered Successfully!" });
   } catch (error) {
     console.log(error);
   }

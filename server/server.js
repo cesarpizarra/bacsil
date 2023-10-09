@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
-app.use(express.json());
+const userRoute = require("./routes/userRoutes");
 
 // Database Connection
 mongoose.connect(process.env.MONGODB_URI, {
@@ -23,9 +23,11 @@ mongoose.connection.once("open", () => {
 });
 
 // Middlewares
-app.use("/", (req, res) => {
-  res.status(200).send("Hello");
-});
+app.use(express.json());
+app.use(cors());
+
+// Routes
+app.use("/bacsil/auth", userRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`.underline.cyan);
