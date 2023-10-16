@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
 
     const { role } = req.body;
 
-    if (role !== "admin" && role !== "teacher") {
+    if (role !== "admin" && role !== "teacher" && role !== "student") {
       return res.status(403).json({ message: "Invalid role." });
     }
 

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import Axios from "axios";
+import Swal from "sweetalert2";
 
 const LoginForm = ({ onRegisterClick }) => {
   const [formData, setFormData] = useState({
     id: "",
-    username: "",
     password: "",
     role: "student",
   });
@@ -16,18 +17,53 @@ const LoginForm = ({ onRegisterClick }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    try {
+      const response = await Axios.post(
+        "http://localhost:3000/bacsil/auth/login",
+        formData
+      );
+
+      if (response.status === 200) {
+        // Login was successful
+        console.log("User logged in successfully!");
+        const { token } = response.data;
+
+        // Store the token in local storage
+        localStorage.setItem("token", token);
+
+        // Redirect the user to their dashboard or perform other actions
+        // For example, you can use React Router to navigate to a different page.
+        // history.push("/dashboard");
+      } else {
+        console.error("Login failed:", response.data.message);
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: response.data.message,
+          showConfirmButton: true,
+        });
+      }
+    } catch (error) {
+      console.error("An error occurred while logging in:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: "An error occurred while logging in",
+        showConfirmButton: true,
+      });
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-8 w-full max-w-[1240px] mx-auto">
+    <div className="min-h-screen animate__animated animate__backInDown flex items-center justify-center px-8 w-full max-w-[1240px] mx-auto">
       <div className="border p-8 rounded shadow-lg shadow-gray-700 w-96">
         <h1 className="text-2xl font-bold mb-4 text-white">Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="id" className="block text-white font-semibold  ">
+            <label htmlFor="id" className="block text-white font-semibold">
               ID Number:
             </label>
             <input
@@ -39,11 +75,10 @@ const LoginForm = ({ onRegisterClick }) => {
               className="w-full border border-gray-300 rounded p-2 outline-none"
             />
           </div>
-
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-white font-semibold "
+              className="block text-white font-semibold"
             >
               Password:
             </label>
@@ -57,7 +92,7 @@ const LoginForm = ({ onRegisterClick }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="role" className="block text-white font-semibold ">
+            <label htmlFor="role" className="block text-white font-semibold">
               Role:
             </label>
             <select
@@ -79,14 +114,10 @@ const LoginForm = ({ onRegisterClick }) => {
           </button>
         </form>
         <p className="text-center text-white text-sm mt-3">
-          Already registered?{" "}
-          <a href="#">
-            Click here to{" "}
-            <span className="text-blue-500 " onClick={onRegisterClick}>
-              Register
-            </span>
-            .
-          </a>
+          Not registered?{" "}
+          <span className="text-blue-500" onClick={onRegisterClick}>
+            Register here.
+          </span>
         </p>
       </div>
     </div>
