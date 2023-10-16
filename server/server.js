@@ -5,7 +5,6 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
-const userRoute = require("./routes/userRoutes");
 
 // Database Connection
 mongoose.connect(process.env.MONGODB_URI, {
@@ -23,12 +22,19 @@ mongoose.connection.once("open", () => {
 });
 
 // Middlewares
-app.use(express.json());
+app.use(express.json({ limit: "5mb" }));
+app.use(express.urlencoded({ extended: false, limit: "20mb" }));
 app.use(cors());
 
 // Routes
+const userRoute = require("./routes/userRoutes");
+const uploadRoute = require("./routes/uploadFileRoute");
+const fileRoute = require("./routes/fileRoutes");
+
 app.use("/bacsil/auth", userRoute);
+app.use("/upload", uploadRoute);
+app.use("/uploads", fileRoute);
 
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`.underline.cyan);
+  console.log(`Server is listening on port ${PORT}`.underline.magenta);
 });
