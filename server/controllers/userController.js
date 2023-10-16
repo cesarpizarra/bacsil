@@ -31,15 +31,16 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { username, userId, password, role } = req.body;
+  const { userId, password, role } = req.body;
 
   try {
     let user;
 
     // Check if the request includes a username or userId
-    if (username) {
-      user = await User.findOne({ username });
-    } else if (userId) {
+    // if (username) {
+    //   user = await User.findOne({ username });
+    // }
+    if (userId) {
       user = await User.findOne({ userId });
     }
 
@@ -60,7 +61,7 @@ exports.login = async (req, res) => {
 
     // Generate a JWT token
     const token = jwt.sign(
-      { userId: user.userId, username: user.username, role: user.role },
+      { userId: user.userId, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
