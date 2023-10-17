@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import axios from "axios";
 import Swal from "sweetalert2";
 
 const LoginForm = ({ onRegisterClick }) => {
   const [formData, setFormData] = useState({
-    id: "",
+    userId: "",
     password: "",
     role: "student",
   });
@@ -21,23 +21,29 @@ const LoginForm = ({ onRegisterClick }) => {
     e.preventDefault();
 
     try {
-      const response = await Axios.post(
+      const response = await axios.post(
         "http://localhost:3000/bacsil/auth/login",
         formData
       );
 
       if (response.status === 200) {
         // Login was successful
-        console.log("User logged in successfully!");
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "Welcome back!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         const { token } = response.data;
 
         // Store the token in local storage
         localStorage.setItem("token", token);
 
-        // Redirect the user to their dashboard or perform other actions
-        // For example, you can use React Router to navigate to a different page.
-        // history.push("/dashboard");
+        // Set the loggedIn state to true
+        setLoggedIn(true);
       } else {
+        // Handle login failure
         console.error("Login failed:", response.data.message);
         Swal.fire({
           icon: "error",
@@ -47,6 +53,7 @@ const LoginForm = ({ onRegisterClick }) => {
         });
       }
     } catch (error) {
+      // Handle error
       console.error("An error occurred while logging in:", error);
       Swal.fire({
         icon: "error",
@@ -68,9 +75,9 @@ const LoginForm = ({ onRegisterClick }) => {
             </label>
             <input
               type="text"
-              id="id"
-              name="id"
-              value={formData.id}
+              id="userId"
+              name="userId"
+              value={formData.userId}
               onChange={handleChange}
               className="w-full border border-gray-300 rounded p-2 outline-none"
             />
