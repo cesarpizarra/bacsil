@@ -108,14 +108,17 @@ const LoginForm = ({ onRegisterClick }) => {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white rounded py-2 px-4 hover:bg-blue-600"
+            className="bg-blue-500 text-white rounded py-2 px-4 hover:bg-blue-600 w-full"
           >
             Login
           </button>
         </form>
         <p className="text-center text-white text-sm mt-3">
           Not registered?{" "}
-          <span className="text-blue-500" onClick={onRegisterClick}>
+          <span
+            className="text-green-500 cursor-pointer"
+            onClick={onRegisterClick}
+          >
             Register here.
           </span>
         </p>

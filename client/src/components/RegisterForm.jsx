@@ -46,10 +46,17 @@ const RegistrationForm = () => {
 
         Swal.fire({
           icon: "success",
-          title: "Registered Successfuly",
-          text: "Welcome back!",
+          title: "Registered ",
+          text: "Registered Successfuly",
           showConfirmButton: false,
           timer: 1500,
+        });
+
+        setFormData({
+          userId: "",
+          username: "",
+          password: "",
+          role: "",
         });
       } else {
         Swal.fire({
@@ -145,14 +152,17 @@ const RegistrationForm = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white rounded py-2 px-4 hover-bg-blue-600"
+            className="bg-blue-500 text-white rounded py-2 px-4 hover:bg-blue-600 w-full"
           >
             Register
           </button>
         </form>
         <p className="text-center text-white text-sm mt-3 cursor-pointer">
           Already registered?{" "}
-          <span className="text-blue-500" onClick={handleToggleLogin}>
+          <span
+            className="text-green-500 cursor-pointer"
+            onClick={handleToggleLogin}
+          >
             Login here.
           </span>
         </p>

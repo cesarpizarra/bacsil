@@ -3,6 +3,7 @@ import Background from "./assets/bg.jpg";
 import LoginForm from "./components/LoginForm";
 import RegistrationForm from "./components/RegisterForm";
 import "animate.css";
+import "transition-style";
 const Loader = () => {
   return (
     <div>
@@ -38,6 +39,7 @@ const App = () => {
             }}
           >
             <div
+              transition-style="in:custom:circle-swoop"
               style={{
                 backgroundImage: `url(${Background})`,
                 backgroundRepeat: "no-repeat",
