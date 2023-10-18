@@ -39,9 +39,6 @@ const LoginForm = ({ onRegisterClick }) => {
 
         // Store the token in local storage
         localStorage.setItem("token", token);
-
-        // Set the loggedIn state to true
-        setLoggedIn(true);
       } else {
         // Handle login failure
         console.error("Login failed:", response.data.message);
