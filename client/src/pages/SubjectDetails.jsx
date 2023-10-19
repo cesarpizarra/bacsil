@@ -1,20 +1,29 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import { BiBookBookmark } from "react-icons/bi";
+import { useParams, useNavigate } from "react-router-dom";
+import { BiBookBookmark, BiArrowBack } from "react-icons/bi";
 import { RiTodoLine } from "react-icons/ri";
 
 const SubjectDetails = () => {
-  // Use the useParams hook to access route parameters
-  const { id } = useParams();
+  const navigate = useNavigate();
 
-  // Dummy data for modules and activities (replace with actual data)
+  const goBackToDashboard = () => {
+    navigate("/");
+  };
+
   const modules = ["Module 1", "Module 2", "Module 3"];
   const activities = ["Activity 1", "Activity 2", "Activity 3"];
 
   return (
-    <div className="w-full p-6">
+    <div className="w-full p-6 max-w-[1240px] mx-auto">
       <div className="mt-12">
-        <h2 className="text-xl font-semibold">Modules:</h2>
+        <div className="flex items-center gap-5">
+          <BiArrowBack
+            size={25}
+            className="cursor-pointer"
+            onClick={goBackToDashboard}
+          />
+          <h2 className="text-xl font-semibold">Modules:</h2>
+        </div>
         <ul className="mt-4">
           {modules.map((module, i) => (
             <li
@@ -33,7 +42,7 @@ const SubjectDetails = () => {
           {activities.map((act, i) => (
             <li
               key={i}
-              className="flex justify-between border-b-2 py-2 cursor-pointer hover:bg-gray-200"
+              className="flex justify-between border-b-2 py-2 cursor-pointer hover-bg-gray-200"
             >
               {act}
               <span>

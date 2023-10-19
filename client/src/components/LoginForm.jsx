@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Logo from "../assets/logo.jpg";
 
-const LoginForm = ({ onLogin }) => {
+const Loader = () => {
+  return (
+    <div>
+      <div className="loader">
+        <div className="justify-content-center jimu-primary-loading"></div>
+      </div>
+    </div>
+  );
+};
+
+const LoginForm = ({ onLogin, onRegisterClick }) => {
+  const [isloading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState({
     userId: "",
     password: "",
@@ -64,63 +76,82 @@ const LoginForm = ({ onLogin }) => {
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+
   return (
-    <div className="min-h-screen animate__animated animate__backInDown flex items-center justify-center px-8 w-full max-w-[1240px] mx-auto">
-      <div className="border p-8 rounded shadow-md shadow-gray-400 w-96">
-        <h1 className="text-2xl font-bold mb-4 ">Login</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="id" className="block  font-semibold">
-              ID Number:
-            </label>
-            <input
-              type="text"
-              id="userId"
-              name="userId"
-              value={formData.userId}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded p-2 outline-none"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block  font-semibold">
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded p-2 outline-none"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="role" className="block  font-semibold">
-              Role:
-            </label>
-            <select
-              id="role"
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded p-2 outline-none"
+    <div className=" min-h-screen  flex flex-col items-center justify-center px-8 w-full max-w-[1240px] mx-auto">
+      <div className="animate__animated animate__backInDown">
+        <div className="flex items-center justify-center gap-5 mb-4">
+          <img src={Logo} alt="Logo" className="w-16 rounded-full" />
+          <h1 className="text-black text-lg md:text-3xl font-medium">
+            Bacsil Learning Classroom
+          </h1>
+        </div>
+        <div className="border p-8 rounded shadow-md shadow-gray-400 w-full max-w-xl">
+          <h1 className="text-2xl font-bold mb-4 ">Login</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label htmlFor="id" className="block  font-semibold">
+                ID Number:
+              </label>
+              <input
+                type="text"
+                id="userId"
+                name="userId"
+                value={formData.userId}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded p-2 outline-none"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="password" className="block  font-semibold">
+                Password:
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded p-2 outline-none"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="role" className="block  font-semibold">
+                Role:
+              </label>
+              <select
+                id="role"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded p-2 outline-none "
+              >
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+              </select>
+            </div>
+            <button
+              type="submit"
+              className="bg-black text-white rounded py-2 px-4 hover:bg-gray-800 w-full"
             >
-              <option value="student">Student</option>
-              <option value="teacher">Teacher</option>
-            </select>
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white rounded py-2 px-4 hover:bg-blue-600 w-full"
-          >
-            Login
-          </button>
-        </form>
-        <p className="text-center text-sm mt-3">
-          Not registered?{" "}
-          <span className="text-green-500 cursor-pointer">Register here.</span>
-        </p>
+              Login
+            </button>
+          </form>
+          <p className="text-center text-sm mt-3">
+            Not registered?{" "}
+            <span
+              className="text-red-500 cursor-pointer"
+              onClick={onRegisterClick}
+            >
+              Register here.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );

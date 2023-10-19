@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Axios from "axios"; // Make sure you have Axios installed
+import Axios from "axios";
 import LoginForm from "./LoginForm";
 import Swal from "sweetalert2";
+import Logo from "../assets/logo.jpg";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -86,13 +87,19 @@ const RegistrationForm = () => {
   }
 
   return (
-    <div className="min-h-screen animate__animated animate__bounceInUp flex items-center justify-center px-8 w-full max-w-[1240px] mx-auto ">
-      <div className="border p-8 rounded shadow-lg shadow-gray-700 w-96">
-        <h1 className="text-2xl font-bold mb-4 text-white">Registration</h1>
+    <div className="min-h-screen animate__animated animate__bounceInUp flex flex-col items-center justify-center px-8 w-full max-w-[1240px] mx-auto ">
+      <div className="flex items-center justify-center gap-5 mb-4">
+        <img src={Logo} alt="Logo" className="w-16 rounded-full" />
+        <h1 className="text-black text-lg md:text-3xl font-medium">
+          Bacsil Learning Classroom
+        </h1>
+      </div>
+      <div className="border p-8 rounded shadow-md shadow-gray-400 w-full max-w-xl">
+        <h1 className="text-2xl font-bold mb-4 text-black">Registration</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="userId" className="block text-white font-semibold">
-              Custom User ID:
+            <label htmlFor="userId" className="block text-black font-semibold">
+              User ID:
             </label>
             <input
               type="text"
@@ -106,7 +113,7 @@ const RegistrationForm = () => {
           <div className="mb-4">
             <label
               htmlFor="username"
-              className="block text-white font-semibold"
+              className="block text-black font-semibold"
             >
               Username:
             </label>
@@ -122,7 +129,7 @@ const RegistrationForm = () => {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-white font-semibold"
+              className="block text-black font-semibold"
             >
               Password:
             </label>
@@ -136,7 +143,7 @@ const RegistrationForm = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="role" className="block text-white font-semibold">
+            <label htmlFor="role" className="block text-black font-semibold">
               Role:
             </label>
             <select
@@ -152,15 +159,15 @@ const RegistrationForm = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white rounded py-2 px-4 hover:bg-blue-600 w-full"
+            className="bg-black text-white rounded py-2 px-4 hover:bg-gray-800 w-full"
           >
             Register
           </button>
         </form>
-        <p className="text-center text-white text-sm mt-3 cursor-pointer">
+        <p className="text-center  text-sm mt-3 cursor-pointer">
           Already registered?{" "}
           <span
-            className="text-green-500 cursor-pointer"
+            className="text-red-500 cursor-pointer"
             onClick={handleToggleLogin}
           >
             Login here.

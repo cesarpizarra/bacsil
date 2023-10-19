@@ -31,8 +31,6 @@ const StudentDashboard = () => {
 
           <div className="cursor-pointer mt-5">
             <Link to={`/subject/${cls.id}`}>
-              {" "}
-              {/* Link to SubjectDetails */}
               <BsFillPersonVcardFill
                 size={25}
                 title={`Open your work from ${cls.title}`}
