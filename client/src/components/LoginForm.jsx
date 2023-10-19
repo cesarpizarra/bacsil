@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const LoginForm = ({ onRegisterClick }) => {
+const LoginForm = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     userId: "",
     password: "",
@@ -39,6 +39,9 @@ const LoginForm = ({ onRegisterClick }) => {
 
         // Store the token in local storage
         localStorage.setItem("token", token);
+
+        // Trigger the login callback
+        onLogin();
       } else {
         // Handle login failure
         console.error("Login failed:", response.data.message);
@@ -63,11 +66,11 @@ const LoginForm = ({ onRegisterClick }) => {
 
   return (
     <div className="min-h-screen animate__animated animate__backInDown flex items-center justify-center px-8 w-full max-w-[1240px] mx-auto">
-      <div className="border p-8 rounded shadow-lg shadow-gray-700 w-96">
-        <h1 className="text-2xl font-bold mb-4 text-white">Login</h1>
+      <div className="border p-8 rounded shadow-md shadow-gray-400 w-96">
+        <h1 className="text-2xl font-bold mb-4 ">Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="id" className="block text-white font-semibold">
+            <label htmlFor="id" className="block  font-semibold">
               ID Number:
             </label>
             <input
@@ -80,10 +83,7 @@ const LoginForm = ({ onRegisterClick }) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-white font-semibold"
-            >
+            <label htmlFor="password" className="block  font-semibold">
               Password:
             </label>
             <input
@@ -96,7 +96,7 @@ const LoginForm = ({ onRegisterClick }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="role" className="block text-white font-semibold">
+            <label htmlFor="role" className="block  font-semibold">
               Role:
             </label>
             <select
@@ -117,14 +117,9 @@ const LoginForm = ({ onRegisterClick }) => {
             Login
           </button>
         </form>
-        <p className="text-center text-white text-sm mt-3">
+        <p className="text-center text-sm mt-3">
           Not registered?{" "}
-          <span
-            className="text-green-500 cursor-pointer"
-            onClick={onRegisterClick}
-          >
-            Register here.
-          </span>
+          <span className="text-green-500 cursor-pointer">Register here.</span>
         </p>
       </div>
     </div>

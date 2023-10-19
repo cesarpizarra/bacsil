@@ -1,9 +1,17 @@
+// App.jsx
 import React, { useState, useEffect } from "react";
-import Background from "./assets/bg.jpg";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import LoginForm from "./components/LoginForm";
-import RegistrationForm from "./components/RegisterForm";
 import "animate.css";
 import "transition-style";
+import StudentDashboard from "./components/StudentDashboard";
+import SubjectDetails from "./pages/SubjectDetails";
+
 const Loader = () => {
   return (
     <div>
@@ -13,51 +21,28 @@ const Loader = () => {
     </div>
   );
 };
+
 const App = () => {
-  const [showRegistration, setShowRegistration] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const toggleRegister = () => {
-    setShowRegistration(!showRegistration);
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2500);
-  }, []);
   return (
-    <div>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className="h-screen w-full relative">
-          <div
-            className="absolute inset-0"
-            style={{
-              filter: "brightness(0.5)",
-            }}
-          >
-            <div
-              transition-style="in:custom:circle-swoop"
-              style={{
-                backgroundImage: `url(${Background})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                height: "100%",
-              }}
-            ></div>
-          </div>
-          <div className="relative z-10 min-h-screen flex items-center justify-center w-full overflow-hidden">
-            {showRegistration ? (
-              <RegistrationForm />
-            ) : (
-              <LoginForm onRegisterClick={toggleRegister} />
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+    <Router>
+      <div>
+        {isLoggedIn ? (
+          <StudentDashboard />
+        ) : (
+          <LoginForm onLogin={() => setIsLoggedIn(true)} />
+        )}
+      </div>
+
+      <Routes>
+        <Route
+          path="/subject/:id"
+          element={isLoggedIn ? <SubjectDetails /> : <Navigate to="/" />}
+        />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
 };
 
