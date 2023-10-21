@@ -26,7 +26,6 @@ const RegistrationForm = () => {
     e.preventDefault();
 
     try {
-      // Check if grade and section are selected
       if (!formData) {
         Swal.fire({
           icon: "error",
@@ -87,14 +86,14 @@ const RegistrationForm = () => {
   }
 
   return (
-    <div className="min-h-screen animate__animated animate__bounceInUp flex flex-col items-center justify-center px-8 w-full max-w-[1240px] mx-auto ">
+    <div className=" min-h-screen animate__animated animate__backInRight flex flex-col items-center justify-center px-8 w-full max-w-[1240px] mx-auto ">
       <div className="flex items-center justify-center gap-5 mb-4">
         <img src={Logo} alt="Logo" className="w-16 rounded-full" />
         <h1 className="text-black text-lg md:text-3xl font-medium">
           Bacsil Learning Classroom
         </h1>
       </div>
-      <div className="border p-8 rounded shadow-md shadow-gray-400 w-full max-w-xl">
+      <div className="border p-8 rounded shadow-md shadow-gray-400 w-full max-w-lg">
         <h1 className="text-2xl font-bold mb-4 text-black">Registration</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
