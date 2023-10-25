@@ -88,7 +88,7 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
         <div className="flex items-center justify-center gap-5 mb-4">
           <img src={Logo} alt="Logo" className="w-16 rounded-full" />
           <h1 className="text-black text-lg md:text-3xl font-medium">
-            Bacsil Learning Classroom
+            Bacsil Online Learning Classroom
           </h1>
         </div>
         <div className="border p-8 rounded shadow-md shadow-gray-400 w-full max-w-xl">
