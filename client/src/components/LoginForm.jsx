@@ -3,18 +3,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Logo from "../assets/logo.jpg";
 
-const Loader = () => {
-  return (
-    <div>
-      <div className="loader">
-        <div className="justify-content-center jimu-primary-loading"></div>
-      </div>
-    </div>
-  );
-};
-
 const LoginForm = ({ onLogin, onRegisterClick }) => {
-  const [isloading, setIsLoading] = useState(true);
+  
   const [formData, setFormData] = useState({
     userId: "",
     password: "",
@@ -76,11 +66,7 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
     }
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }, []);
+ 
 
   return (
     <div className=" min-h-screen  flex flex-col items-center justify-center px-8 w-full max-w-[1240px] mx-auto">
