@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import Logo from "../assets/logo.jpg";
 
 const LoginForm = ({ onLogin, onRegisterClick }) => {
-  
   const [formData, setFormData] = useState({
     userId: "",
     password: "",
@@ -60,13 +59,11 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
       Swal.fire({
         icon: "error",
         title: "Login Failed",
-        text: "An error occurred while logging in",
+        text: "You don't have permission to this role.",
         showConfirmButton: true,
       });
     }
   };
-
- 
 
   return (
     <div className=" min-h-screen  flex flex-col items-center justify-center px-8 w-full max-w-[1240px] mx-auto">
@@ -74,7 +71,7 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
         <div className="flex items-center justify-center gap-5 mb-4">
           <img src={Logo} alt="Logo" className="w-16 rounded-full" />
           <h1 className="text-black text-lg md:text-3xl font-medium">
-            Bacsil Online Learning Classroom
+            Bacsil Learning Classroom
           </h1>
         </div>
         <div className="border p-8 rounded shadow-md shadow-gray-400 w-full max-w-xl">

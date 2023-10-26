@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { GrUserSettings } from "react-icons/gr";
+import Settings from "./Settings";
+import Logo from "../assets/logo.jpg"
 
 const StudentDashboard = () => {
   const classes = [
@@ -13,12 +15,27 @@ const StudentDashboard = () => {
     },
     { id: 3, title: "History Class", description: "Discover the past." },
   ];
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Function to open the modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  
   return (
     <div className="w-full p-6 max-w-[1240px] mx-auto relative">
-      <h1 className="text-xl md:text-3xl font-semibold mb-4">
-        Bacsil Classroom
+      <div className="flex items-center  gap-5 py-8">
+        <img src={Logo} alt="Logo" className="w-20"/>
+      <h1 className="text-xl md:text-3xl font-semibold">
+        Bacsil Online Classroom
       </h1>
+      </div>
       {classes.map((cls) => (
         <div
           key={cls.id}
@@ -41,8 +58,10 @@ const StudentDashboard = () => {
       ))}
 
       <div className="absolute bottom-[-3rem] right-0 px-6 cursor-pointer ">
-        <GrUserSettings size={25} title="User Settings " />
+        <GrUserSettings size={25} title="User Settings " onClick={openModal}/>
       </div>
+
+      <Settings isOpen={isModalOpen} onClose={closeModal} /> 
     </div>
   );
 };

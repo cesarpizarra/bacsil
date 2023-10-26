@@ -10,7 +10,9 @@ import RegistrationForm from "./components/RegisterForm";
 import "animate.css";
 import "transition-style";
 import StudentDashboard from "./components/StudentDashboard";
+import TeacherDashboard from "./components/TeacherDashboard"; // Import TeacherDashboard
 import SubjectDetails from "./pages/SubjectDetails";
+
 const Loader = () => {
   return (
     <div>
@@ -25,6 +27,7 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
   const [isloading, setIsLoading] = useState(true);
+  const [userRole, setUserRole] = useState(""); // Default role is ""
 
   // Callback to show the registration form
   const showRegistrationForm = () => {
@@ -36,6 +39,13 @@ const App = () => {
       setIsLoading(false);
     }, 3000);
   }, []);
+
+  // Callback to set the user's role when they log in
+  const setUserRoleOnLogin = (role) => {
+    setUserRole(role);
+    setIsLoggedIn(true);
+  };
+
   return (
     <div>
       {isloading ? (
@@ -47,17 +57,24 @@ const App = () => {
               path="/"
               element={
                 isLoggedIn ? (
-                  <StudentDashboard />
-                ) : showRegistration ? ( // Show RegistrationForm if showRegistration is true
-                  <RegistrationForm onLogin={() => setIsLoggedIn(true)} />
+                  userRole === "student" ? (
+                    <StudentDashboard />
+                  ) : userRole === "teacher" ? (
+                    <TeacherDashboard />
+                  ) : (
+                    <Navigate to="/" />
+                  )
+                ) : showRegistration ? (
+                  <RegistrationForm onLogin={setUserRoleOnLogin} />
                 ) : (
                   <LoginForm
-                    onLogin={() => setIsLoggedIn(true)}
+                    onLogin={setUserRoleOnLogin}
                     onRegisterClick={showRegistrationForm}
                   />
                 )
               }
             />
+
             <Route
               path="/subject/:id"
               element={isLoggedIn ? <SubjectDetails /> : <Navigate to="/" />}
