@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Logo from "../assets/logo.jpg";
@@ -36,13 +36,13 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
           showConfirmButton: false,
           timer: 1500,
         });
+
         const { token } = response.data;
 
         // Store the token in local storage
         localStorage.setItem("token", token);
-
-        // Trigger the login callback
-        onLogin();
+        // Trigger the login callback and pass the selected role
+        onLogin(formData.role);
       } else {
         // Handle login failure
         console.error("Login failed:", response.data.message);
@@ -59,14 +59,14 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
       Swal.fire({
         icon: "error",
         title: "Login Failed",
-        text: "You don't have permission to this role.",
+        text: "You don't have permission for this role.",
         showConfirmButton: true,
       });
     }
   };
 
   return (
-    <div className=" min-h-screen  flex flex-col items-center justify-center px-8 w-full max-w-[1240px] mx-auto">
+    <div className=" min-h-screen flex flex-col items-center justify-center px-8 w-full max-w-[1240px] mx-auto">
       <div className="animate__animated animate__backInDown">
         <div className="flex items-center justify-center gap-5 mb-4">
           <img src={Logo} alt="Logo" className="w-16 rounded-full" />
@@ -120,7 +120,7 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
             </div>
             <button
               type="submit"
-              className="bg-black text-white rounded py-2 px-4 hover:bg-gray-800 w-full"
+              className="bg-black text-white rounded py-2 px-4 hover-bg-gray-800 w-full"
             >
               Login
             </button>

@@ -10,7 +10,7 @@ import RegistrationForm from "./components/RegisterForm";
 import "animate.css";
 import "transition-style";
 import StudentDashboard from "./components/StudentDashboard";
-import TeacherDashboard from "./components/TeacherDashboard"; // Import TeacherDashboard
+import TeacherDashboard from "./components/TeacherDashboard";
 import SubjectDetails from "./pages/SubjectDetails";
 
 const Loader = () => {
@@ -27,7 +27,7 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
   const [isloading, setIsLoading] = useState(true);
-  const [userRole, setUserRole] = useState(""); // Default role is ""
+  const [userRole, setUserRole] = useState("student");
 
   // Callback to show the registration form
   const showRegistrationForm = () => {
