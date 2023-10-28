@@ -12,6 +12,7 @@ import "transition-style";
 import StudentDashboard from "./components/StudentDashboard";
 import TeacherDashboard from "./components/TeacherDashboard";
 import SubjectDetails from "./pages/SubjectDetails";
+import StudentList from "./components/StudentList";
 
 const Loader = () => {
   return (
@@ -74,6 +75,7 @@ const App = () => {
                 )
               }
             />
+            <Route path="/students" element={<StudentList />} />
 
             <Route
               path="/subject/:id"

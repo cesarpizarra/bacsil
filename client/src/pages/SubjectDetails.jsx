@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BiBookBookmark, BiArrowBack } from "react-icons/bi";
 import { RiTodoLine } from "react-icons/ri";
 
