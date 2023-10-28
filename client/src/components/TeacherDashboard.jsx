@@ -18,7 +18,7 @@ const items = [
   {
     id: 2,
     title: "Upload Modules",
-    path: "/upload-modules",
+    path: "/upload-module",
     icon: <AiOutlineCloudUpload size={35} />,
     background: Books,
   },
@@ -71,7 +71,7 @@ const TeacherDashboard = () => {
                 className="text-white cursor-pointer rounded  p-24 flex flex-col gap-5 items-center justify-center"
               >
                 {item.icon}
-                <p className="text-lg md:text-2xl font-semibold ">
+                <p className="text-md md:text-xl font-semibold ">
                   {item.title}
                 </p>
               </div>

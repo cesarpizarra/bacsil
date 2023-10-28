@@ -13,6 +13,8 @@ import StudentDashboard from "./components/StudentDashboard";
 import TeacherDashboard from "./components/TeacherDashboard";
 import SubjectDetails from "./pages/SubjectDetails";
 import StudentList from "./components/StudentList";
+import ModuleUpload from "./components/ModuleUpload";
+import ActivityUpload from "./components/ActivityUpload";
 
 const Loader = () => {
   return (
@@ -76,6 +78,8 @@ const App = () => {
               }
             />
             <Route path="/students" element={<StudentList />} />
+            <Route path="/upload-module" element={<ModuleUpload />} />
+            <Route path="/upload-activity" element={<ActivityUpload />} />
 
             <Route
               path="/subject/:id"
