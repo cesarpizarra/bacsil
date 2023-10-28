@@ -33,7 +33,7 @@ const fileRoute = require("./routes/fileRoutes");
 
 app.use("/bacsil/auth", userRoute);
 app.use("/upload", uploadRoute);
-app.use("/uploads", fileRoute);
+app.use("/files", fileRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`.underline.magenta);

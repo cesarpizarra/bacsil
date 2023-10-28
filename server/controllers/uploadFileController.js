@@ -6,8 +6,10 @@ exports.uploadFile = async (req, res) => {
   }
 
   const { originalname, mimetype, buffer } = req.file;
+  const subject = req.body.subject;
 
   const newFile = new File({
+    subject: subject,
     name: originalname,
     type: mimetype,
     data: buffer,

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const File = require("../models/upload");
 
+// Route for getting a file by filename
 router.get("/:filename", async (req, res) => {
   const { filename } = req.params;
 
@@ -14,6 +15,32 @@ router.get("/:filename", async (req, res) => {
 
     res.setHeader("Content-Type", file.type);
     res.send(file.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// New route for getting all files of a specific subject
+router.get("/subject/:subject", async (req, res) => {
+  const { subject } = req.params;
+
+  try {
+    const files = await File.find({ subject });
+
+    if (!files || files.length === 0) {
+      return res
+        .status(404)
+        .json({ message: `No files found for subject: ${subject}` });
+    }
+
+    // Extract relevant file information and send it as JSON
+    const fileData = files.map((file) => ({
+      filename: file.name,
+      contentType: file.type,
+    }));
+
+    res.json(fileData);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

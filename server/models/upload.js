@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const fileSchema = new mongoose.Schema({
+  subject: String,
   name: String,
   type: String,
   data: Buffer,
