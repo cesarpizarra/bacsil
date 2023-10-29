@@ -23,7 +23,7 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/bacsil/auth/login",
+        "http://localhost:3000/bacsil/login",
         formData
       );
 

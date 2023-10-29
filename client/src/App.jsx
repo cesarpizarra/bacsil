@@ -12,9 +12,9 @@ import "transition-style";
 import StudentDashboard from "./components/StudentDashboard";
 import TeacherDashboard from "./components/TeacherDashboard";
 import SubjectDetails from "./pages/SubjectDetails";
-import StudentList from "./components/StudentList";
-import ModuleUpload from "./components/ModuleUpload";
-import ActivityUpload from "./components/ActivityUpload";
+import StudentList from "./pages/StudentList";
+import ModuleUpload from "./pages/ModuleUpload";
+import ActivityUpload from "./pages/ActivityUpload";
 
 const Loader = () => {
   return (

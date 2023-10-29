@@ -12,6 +12,23 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  firstName: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  middleName: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+
+  lastName: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+
   password: {
     type: String,
     required: true,
@@ -19,7 +36,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-    enum: ["admin", "teacher", "student"],
+    enum: ["teacher", "student"],
   },
 });
 

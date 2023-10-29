@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MdOutlineLibraryBooks } from "react-icons/md";
-import Background from "../assets/tasks.jpg";
-const ActivityUpload = () => {
+import Background from "../assets/books.jpg";
+const ModuleUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   // Function to handle file selection
@@ -29,11 +29,23 @@ const ActivityUpload = () => {
       <div className="max-w-md mx-auto">
         <div className="flex items-center gap-4 mb-5">
           <MdOutlineLibraryBooks size={30} />
-          <h1 className="text-lg md:text-2xl font-semibold ">
-            Upload Activity
-          </h1>
+          <h1 className="text-lg md:text-2xl font-semibold ">Upload Module</h1>
         </div>
-        <div className="bg-green-400 p-12 shadow-lg rounded ">
+        <div className="mb-4">
+          <label htmlFor="subjects" className="block  font-semibold">
+            Subjects:
+          </label>
+          <select
+            id="subjects"
+            name="subjects"
+            className="w-full border border-gray-300 rounded p-2 outline-none text-black cursor-pointer"
+          >
+            <option value="science">Science</option>
+            <option value="math">Math</option>
+            <option value="history">History</option>
+          </select>
+        </div>
+        <div className="bg-purple-500 p-12 shadow-lg rounded ">
           <label className="block  text-sm font-bold mb-2">
             Choose a file to upload module:
           </label>
@@ -65,4 +77,4 @@ const ActivityUpload = () => {
   );
 };
 
-export default ActivityUpload;
+export default ModuleUpload;

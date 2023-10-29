@@ -31,7 +31,7 @@ const userRoute = require("./routes/userRoutes");
 const uploadRoute = require("./routes/uploadFileRoute");
 const fileRoute = require("./routes/fileRoutes");
 
-app.use("/bacsil/auth", userRoute);
+app.use("/bacsil", userRoute);
 app.use("/upload", uploadRoute);
 app.use("/files", fileRoute);
 

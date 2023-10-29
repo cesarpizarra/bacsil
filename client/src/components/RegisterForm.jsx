@@ -8,6 +8,9 @@ const RegistrationForm = () => {
   const [formData, setFormData] = useState({
     userId: "",
     username: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
     password: "",
     role: "student", // Default role
   });
@@ -19,6 +22,17 @@ const RegistrationForm = () => {
     setFormData({
       ...formData,
       [name]: value,
+    });
+  };
+  const resetForm = () => {
+    setFormData({
+      userId: "",
+      username: "",
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      password: "",
+      role: "",
     });
   };
 
@@ -55,6 +69,9 @@ const RegistrationForm = () => {
         setFormData({
           userId: "",
           username: "",
+          firstName: "",
+          middleName: "",
+          lastName: "",
           password: "",
           role: "",
         });
@@ -127,6 +144,55 @@ const RegistrationForm = () => {
           </div>
           <div className="mb-4">
             <label
+              htmlFor="firstName"
+              className="block text-black font-semibold"
+            >
+              First Name:
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded p-2 outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="middleName"
+              className="block text-black font-semibold"
+            >
+              Middle Name:
+            </label>
+            <input
+              type="text"
+              id="middleName"
+              name="middleName"
+              value={formData.middleName}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded p-2 outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="lastName"
+              className="block text-black font-semibold"
+            >
+              Last Name:
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded p-2 outline-none"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
               htmlFor="password"
               className="block text-black font-semibold"
             >
@@ -156,12 +222,21 @@ const RegistrationForm = () => {
               <option value="teacher">Teacher</option>
             </select>
           </div>
-          <button
-            type="submit"
-            className="bg-black text-white rounded py-2 px-4 hover:bg-gray-800 w-full"
-          >
-            Register
-          </button>
+          <div className="flex flex-col gap-2">
+            <button
+              type="reset"
+              className="bg-gray-600 text-white rounded py-2 px-4 hover:bg-gray-800 w-full"
+              onClick={resetForm}
+            >
+              Reset
+            </button>
+            <button
+              type="submit"
+              className="bg-black text-white rounded py-2 px-4 hover-bg-gray-800 w-full"
+            >
+              Register
+            </button>
+          </div>
         </form>
         <p className="text-center  text-sm mt-3 cursor-pointer">
           Already registered?{" "}

@@ -1,13 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import { students } from "../api/students";
-const StudentList = () => {
+
+import axios from "axios";
+const StudentList = ({ token }) => {
+  const [students, setStudents] = useState([]);
   const navigate = useNavigate();
 
   const goBackToDashboard = () => {
     navigate("/");
   };
+
+  const fetchStudents = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/bacsil/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // console.log("API Response:", response.data);
+
+      if (response.status === 200) {
+        setStudents(response.data);
+        // console.log(response.data);
+      }
+    } catch (error) {
+      console.error("Fetch students error:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStudents();
+  }, [token]);
   return (
     <div className="w-full px-4 py-10 max-w-[1240px] mx-auto">
       <div className="flex items-center gap-4">
