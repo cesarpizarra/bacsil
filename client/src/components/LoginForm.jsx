@@ -59,7 +59,7 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
       Swal.fire({
         icon: "error",
         title: "Login Failed",
-        text: "You don't have permission for this role.",
+        text: "Invalid id, password or role.",
         showConfirmButton: true,
       });
     }

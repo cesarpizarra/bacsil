@@ -1,18 +1,33 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { BiBookBookmark, BiArrowBack } from "react-icons/bi";
-import { RiTodoLine } from "react-icons/ri";
+import { AiFillFilePpt, AiOutlineFilePdf } from "react-icons/ai";
+import { SiGoogledocs } from "react-icons/si";
+import axios from "axios";
 
 const SubjectDetails = () => {
+  const [modules, setModules] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const subjectTitle = location.state.subject;
 
   const goBackToDashboard = () => {
     navigate("/");
   };
 
-  const modules = ["Module 1", "Module 2", "Module 3"];
-  const activities = ["Activity 1", "Activity 2", "Activity 3"];
-
+  useEffect(() => {
+    const fetchModules = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/files/subject/${subjectTitle}`
+        );
+        setModules(response.data);
+      } catch (error) {
+        console.error("Error fetching modules:", error);
+      }
+    };
+    fetchModules();
+  }, [subjectTitle]);
   return (
     <div className="w-full p-6 max-w-[1240px] mx-auto">
       <div className="mt-12">
@@ -28,29 +43,25 @@ const SubjectDetails = () => {
           {modules.map((module, i) => (
             <li
               key={i}
-              className="flex justify-between border-b-2 py-2 cursor-pointer hover:bg-gray-200"
+              className="flex justify-between border-b-2 py-2 cursor-pointer hover-bg-gray-200"
             >
-              {module}
+              <span>{module.filename}</span>
               <span>
-                <BiBookBookmark size={25} className="text-gray-500" />
+                {module.contentType === "application/pdf" ? (
+                  <AiOutlineFilePdf size={25} className="text-gray-500" />
+                ) : module.contentType ===
+                  "application/vnd.openxmlformats-officedocument.presentationml.presentation" ? (
+                  <AiFillFilePpt size={25} className="text-gray-500" />
+                ) : module.contentType === "application/msword" ? (
+                  <SiGoogledocs size={25} className="text-gray-500" />
+                ) : (
+                  <BiBookBookmark size={25} className="text-gray-500" />
+                )}
               </span>
             </li>
           ))}
         </ul>
         <h2 className="text-xl font-semibold mt-4">Activities:</h2>
-        <ul>
-          {activities.map((act, i) => (
-            <li
-              key={i}
-              className="flex justify-between border-b-2 py-2 cursor-pointer hover-bg-gray-200"
-            >
-              {act}
-              <span>
-                <RiTodoLine size={25} className="text-gray-500" />
-              </span>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

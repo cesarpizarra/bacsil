@@ -61,7 +61,7 @@ const App = () => {
               element={
                 isLoggedIn ? (
                   userRole === "student" ? (
-                    <StudentDashboard />
+                    <StudentDashboard userId={123456} />
                   ) : userRole === "teacher" ? (
                     <TeacherDashboard userId={12345} />
                   ) : (

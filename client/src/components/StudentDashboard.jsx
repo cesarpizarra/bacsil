@@ -7,13 +7,24 @@ import Logo from "../assets/logo.jpg";
 
 const StudentDashboard = () => {
   const classes = [
-    { id: 1, title: "Math Class", description: "Learn math fundamentals." },
+    {
+      id: 1,
+      title: "Math Class",
+      description: "Learn math fundamentals.",
+      path: "math",
+    },
     {
       id: 2,
       title: "Science Class",
       description: "Explore the wonders of science.",
+      path: "science",
     },
-    { id: 3, title: "History Class", description: "Discover the past." },
+    {
+      id: 3,
+      title: "History Class",
+      description: "Discover the past.",
+      path: "history",
+    },
   ];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,7 +58,7 @@ const StudentDashboard = () => {
           </div>
 
           <div className="cursor-pointer mt-5">
-            <Link to={`/subject/${cls.id}`}>
+            <Link to={`/subject/${cls.id}`} state={{ subject: cls.path }}>
               <BsFillPersonVcardFill
                 size={25}
                 title={`Open your work from ${cls.title}`}
