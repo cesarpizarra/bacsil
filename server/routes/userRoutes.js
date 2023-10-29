@@ -12,4 +12,7 @@ router.post("/login", userController.login);
 
 router.get("/users", userController.users);
 
+// Get user info Route
+router.get("/info/:userId", userController.info);
+
 module.exports = router;

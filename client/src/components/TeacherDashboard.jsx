@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineOrderedList, AiOutlineCloudUpload } from "react-icons/ai";
 import Logo from "../assets/logo.jpg";
@@ -7,6 +7,7 @@ import { GrUserSettings } from "react-icons/gr";
 import Students from "../assets/students.jpg";
 import Tasks from "../assets/tasks.jpg";
 import Books from "../assets/books.jpg";
+import axios from "axios";
 const items = [
   {
     id: 1,
@@ -30,9 +31,29 @@ const items = [
     background: Tasks,
   },
 ];
-const TeacherDashboard = () => {
+const TeacherDashboard = ({ userId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [fullName, setFullName] = useState("");
+
+  useEffect(() => {
+    console.log("Id:", userId);
+    // Fetch user information when the component mounts
+    if (userId) {
+      axios
+        .get(`http://localhost:3000/bacsil/info/${userId}`) // Adjust the API endpoint to your server
+        .then((response) => {
+          const { firstName, middleName, lastName } = response.data;
+          const fullName = `${firstName} ${middleName} ${lastName}`;
+          setFullName(fullName);
+        })
+        .catch((error) => {
+          console.error("Error fetching user information:", error);
+        });
+    } else {
+      console.log("User Not Logged In");
+    }
+  }, [userId]);
 
   // Function to open the modal
   const openModal = () => {
@@ -49,7 +70,7 @@ const TeacherDashboard = () => {
         <img src={Logo} alt="Logo" className="w-24 " />
         <h3 className="text-lg md:text-2xl">Bacsil Online Learning </h3>
       </div>
-      <h1 className="text-lg font-semibold py-4 ">Welcome Teacher 1</h1>
+      <h1 className="text-lg font-semibold py-4 ">Welcome {fullName}</h1>
 
       <div className="w-full  shadow-md rounded-lg relative">
         <div className="grid md:grid-cols-2 p-12 gap-10 ">

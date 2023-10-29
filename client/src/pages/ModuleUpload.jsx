@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { MdOutlineLibraryBooks } from "react-icons/md";
 import Background from "../assets/books.jpg";
+import axios from "axios";
+import Swal from "sweetalert2";
 const ModuleUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedSubject, setSelectedSubject] = useState("science");
 
   // Function to handle file selection
   const handleFileSelect = (event) => {
@@ -10,14 +13,49 @@ const ModuleUpload = () => {
     setSelectedFile(file);
   };
 
+  // Function to handle subject selection
+  const handleSubjectSelect = (event) => {
+    setSelectedSubject(event.target.value);
+  };
+
   // Function to handle file upload
   const handleFileUpload = () => {
     if (selectedFile) {
-      // Perform file upload logic here, e.g., send the file to a server.
-      // You can use libraries like axios for this purpose.
-      console.log("Uploading file:", selectedFile);
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      formData.append("subject", selectedSubject);
+
+      // Send a POST request to the server
+      axios
+        .post("http://localhost:3000/upload/file", formData)
+        .then((response) => {
+          // console.log("File uploaded successfully");
+
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .catch((error) => {
+          console.error("File upload failed:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Upload Failed",
+            text: "File upload failed",
+            showConfirmButton: true,
+          });
+        });
     } else {
-      console.log("No file selected.");
+      // console.log("No file selected.");
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: "Please select a file",
+        showConfirmButton: true,
+      });
     }
   };
 
@@ -36,6 +74,7 @@ const ModuleUpload = () => {
             Subjects:
           </label>
           <select
+            onChange={handleSubjectSelect}
             id="subjects"
             name="subjects"
             className="w-full border border-gray-300 rounded p-2 outline-none text-black cursor-pointer"

@@ -63,7 +63,7 @@ const App = () => {
                   userRole === "student" ? (
                     <StudentDashboard />
                   ) : userRole === "teacher" ? (
-                    <TeacherDashboard />
+                    <TeacherDashboard userId={12345} />
                   ) : (
                     <Navigate to="/" />
                   )

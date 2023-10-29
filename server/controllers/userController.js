@@ -66,8 +66,15 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-
-    res.status(200).json({ message: "Logged in successfully", token });
+    // Return additional user information in the response
+    const { firstName, middleName, lastName } = user;
+    res.status(200).json({
+      message: "Logged in successfully",
+      token,
+      firstName,
+      middleName,
+      lastName,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -79,6 +86,28 @@ exports.users = async (req, res) => {
     const users = await User.find().select("-password");
 
     res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+exports.info = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Retrieve user information based on the provided user ID
+    const user = await User.findOne({ userId });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Extract user's first name, middle name, and last name
+    const { firstName, middleName, lastName } = user;
+
+    // Send the user's information as a JSON response
+    res.status(200).json({ firstName, middleName, lastName });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
