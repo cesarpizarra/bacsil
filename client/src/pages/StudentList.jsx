@@ -22,8 +22,11 @@ const StudentList = ({ token }) => {
       // console.log("API Response:", response.data);
 
       if (response.status === 200) {
-        setStudents(response.data);
-        // console.log(response.data);
+        const studentData = response.data.filter(
+          (user) => user.role === "student"
+        );
+        setStudents(studentData);
+        console.log("studens", studentData);
       }
     } catch (error) {
       console.error("Fetch students error:", error);

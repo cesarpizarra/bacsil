@@ -38,6 +38,16 @@ const App = () => {
   };
 
   useEffect(() => {
+    // Check if the user is already authenticated
+    const token = localStorage.getItem("token");
+    if (token) {
+      // If the token is still valid, set the user as logged in
+      setIsLoggedIn(true);
+
+      const userRole = localStorage.getItem("userRole");
+      setUserRole(userRole || "student");
+    }
+
     setTimeout(() => {
       setIsLoading(false);
     }, 3000);
@@ -47,6 +57,7 @@ const App = () => {
   const setUserRoleOnLogin = (role) => {
     setUserRole(role);
     setIsLoggedIn(true);
+    localStorage.setItem("userRole", role);
   };
 
   return (
@@ -80,7 +91,6 @@ const App = () => {
             <Route path="/students" element={<StudentList />} />
             <Route path="/upload-module" element={<ModuleUpload />} />
             <Route path="/upload-activity" element={<ActivityUpload />} />
-
             <Route
               path="/subject/:id"
               element={isLoggedIn ? <SubjectDetails /> : <Navigate to="/" />}

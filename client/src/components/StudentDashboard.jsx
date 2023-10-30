@@ -43,9 +43,7 @@ const StudentDashboard = () => {
     <div className="w-full p-6 max-w-[1240px] mx-auto relative">
       <div className="flex items-center  gap-5 py-8">
         <img src={Logo} alt="Logo" className="w-20" />
-        <h1 className="text-xl md:text-3xl font-semibold">
-          Bacsil Online Classroom
-        </h1>
+        <h1 className="text-xl md:text-3xl font-semibold">Bacsil Classroom</h1>
       </div>
       {classes.map((cls) => (
         <div
