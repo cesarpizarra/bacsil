@@ -67,7 +67,9 @@ const ModuleUpload = () => {
       <div className="max-w-md mx-auto">
         <div className="flex items-center gap-4 mb-5">
           <MdOutlineLibraryBooks size={30} />
-          <h1 className="text-lg md:text-2xl font-semibold ">Upload Module</h1>
+          <h1 className="text-lg md:text-2xl font-semibold drop-shadow-lg">
+            Upload Module
+          </h1>
         </div>
         <div className="mb-4">
           <label htmlFor="subjects" className="block  font-semibold">

@@ -37,7 +37,6 @@ const TeacherDashboard = ({ userId }) => {
   const [fullName, setFullName] = useState("");
 
   useEffect(() => {
-    console.log("Id:", userId);
     // Fetch user information when the component mounts
     if (userId) {
       axios

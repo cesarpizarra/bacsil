@@ -15,4 +15,7 @@ router.get("/users", userController.users);
 // Get user info Route
 router.get("/info/:userId", userController.info);
 
+// Updar user Route
+router.post("/update-password", userController.updatePassword);
+
 module.exports = router;
