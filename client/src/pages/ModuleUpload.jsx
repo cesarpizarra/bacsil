@@ -86,8 +86,8 @@ const ModuleUpload = () => {
             <option value="history">History</option>
           </select>
         </div>
-        <div className="bg-purple-500 p-12 shadow-lg rounded ">
-          <label className="block  text-sm font-bold mb-2">
+        <div className="bg-white p-12 shadow-lg rounded text-black">
+          <label className="block  text-lg font-bold mb-2">
             Choose a file to upload module:
           </label>
           <input

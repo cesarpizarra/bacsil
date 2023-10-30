@@ -1,82 +1,113 @@
 import React, { useState } from "react";
-import { MdOutlineLibraryBooks } from "react-icons/md";
+import axios from "axios";
+import Select from "react-select";
+import Swal from "sweetalert2";
 import Background from "../assets/tasks.jpg";
-const ActivityUpload = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
 
-  // Function to handle file selection
-  const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+const ActivityForm = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    url: "",
+    subject: null,
+  });
+
+  const subjects = [
+    { value: "math", label: "Math" },
+    { value: "science", label: "Science" },
+    { value: "history", label: "History" },
+  ];
+
+  const handleChange = (selectedOption) => {
+    setFormData({ ...formData, subject: selectedOption.value });
   };
 
-  // Function to handle file upload
-  const handleFileUpload = () => {
-    if (selectedFile) {
-      // Perform file upload logic here, e.g., send the file to a server.
-      // You can use libraries like axios for this purpose.
-      console.log("Uploading file:", selectedFile);
-    } else {
-      console.log("No file selected.");
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/activity/upload",
+        formData
+      );
+      if (response.status === 200) {
+        Swal.fire("Success", "Activity saved successfully", "success");
+      }
+      setFormData({
+        name: "",
+        url: "",
+        subject: "",
+      });
+    } catch (error) {
+      Swal.fire("Error", "Error uploading the activity", "error");
     }
   };
 
   return (
     <div
       style={{ backgroundImage: `url(${Background})`, backgroundSize: "cover" }}
-      className="w-full flex-col p-4 flex items-cente justify-center h-screen text-white"
+      className="flex items-center justify-center h-screen px-4 w-full"
     >
-      <div className="max-w-md mx-auto">
-        <div className="flex items-center gap-4 mb-5">
-          <MdOutlineLibraryBooks size={30} />
-          <h1 className="text-lg md:text-2xl font-semibold ">
-            Upload Activity
-          </h1>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="subjects" className="block  font-semibold">
-            Subjects:
-          </label>
-          <select
-            id="subjects"
-            name="subjects"
-            className="w-full border border-gray-300 rounded p-2 outline-none text-black cursor-pointer"
-          >
-            <option value="science">Science</option>
-            <option value="math">Math</option>
-            <option value="history">History</option>
-          </select>
-        </div>
-        <div className="bg-green-400 p-12 shadow-lg rounded ">
-          <label className="block  text-sm font-bold mb-2">
-            Choose a file to upload module:
-          </label>
-          <input
-            type="file"
-            accept=".pdf, .doc, .docx" // Define accepted file types
-            onChange={handleFileSelect}
-            className="border border-gray-300 rounded p-2 w-full cursor-pointer "
-          />
-
-          <div className="mt-4">
-            {selectedFile ? (
-              <div>
-                <p className="text-white">Selected file: {selectedFile.name}</p>
-                <button
-                  onClick={handleFileUpload}
-                  className="bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-700"
-                >
-                  Upload
-                </button>
-              </div>
-            ) : (
-              <p className="text-gray-400">No file selected</p>
-            )}
+      <div className="w-full max-w-xl mx-auto bg-white p-8 shadow-md rounded-md">
+        <h1 className="text-md md:text-2xl font-bold mb-4">Upload Activity</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              className="mt-1 p-2 border rounded w-full outline-none"
+            />
           </div>
-        </div>
+          <div className="mb-4">
+            <label
+              htmlFor="url"
+              className="block text-sm font-medium text-gray-700"
+            >
+              URL
+            </label>
+            <input
+              type="text"
+              id="url"
+              name="url"
+              value={formData.url}
+              onChange={handleInputChange}
+              className="mt-1 p-2 border rounded w-full outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Subject
+            </label>
+            <Select
+              value={formData.value}
+              onChange={handleChange}
+              options={subjects}
+              isSearchable={true}
+            />
+          </div>
+          <div className="mb-4">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Upload Activity
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
 };
 
-export default ActivityUpload;
+export default ActivityForm;
