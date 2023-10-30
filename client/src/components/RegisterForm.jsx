@@ -50,7 +50,7 @@ const RegistrationForm = () => {
         return;
       }
       const response = await Axios.post(
-        "http://localhost:3000/bacsil/auth/register",
+        "http://localhost:3000/bacsil/register",
         formData
       );
 
