@@ -9,6 +9,7 @@ import { saveAs } from "file-saver";
 
 const SubjectDetails = () => {
   const [modules, setModules] = useState([]);
+  const [activities, setActivities] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const subjectTitle = location.state.subject;
@@ -30,6 +31,21 @@ const SubjectDetails = () => {
       }
     };
     fetchModules();
+  }, [subjectTitle]);
+
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/activity/activities/${subjectTitle}`
+        );
+        setActivities(response.data);
+        // console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching modules:", error);
+      }
+    };
+    fetchActivities();
   }, [subjectTitle]);
   const downloadFile = (fileId, filename) => {
     axios
@@ -90,6 +106,29 @@ const SubjectDetails = () => {
           ))}
         </ul>
         <h2 className="text-xl font-semibold mt-4">Activities:</h2>
+        <div className="mt-4 ">
+          {activities.map((activity, i) => (
+            <div
+              key={i}
+              className=" p-12 rounded shadow-md border mb-4 hover:bg-gray-200"
+            >
+              <p className="text-sm md:text-xl font-semibold text-gray-700">
+                {activity.name}
+              </p>
+              <a href={activity.url} className="text-blue-500">
+                <p
+                  style={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {activity.url}
+                </p>
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

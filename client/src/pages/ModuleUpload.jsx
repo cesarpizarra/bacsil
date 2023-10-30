@@ -3,9 +3,12 @@ import { MdOutlineLibraryBooks } from "react-icons/md";
 import Background from "../assets/books.jpg";
 import axios from "axios";
 import Swal from "sweetalert2";
+import ProgressLoader from "../components/ProgressLoader"; // Import your ProgressLoader component
+
 const ModuleUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState("science");
+  const [uploading, setUploading] = useState(false);
 
   // Function to handle file selection
   const handleFileSelect = (event) => {
@@ -25,21 +28,30 @@ const ModuleUpload = () => {
       formData.append("file", selectedFile);
       formData.append("subject", selectedSubject);
 
+      // Show the ProgressLoader
+      setUploading(true);
+
       // Send a POST request to the server
       axios
         .post("http://localhost:3000/upload/file", formData)
         .then((response) => {
-          // console.log("File uploaded successfully");
+          setTimeout(() => {
+            // Hide the ProgressLoader
+            setUploading(false);
 
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+            // Show success message
+            Swal.fire({
+              icon: "success",
+              title: "Your work has been saved",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }, 4000);
         })
         .catch((error) => {
+          // Hide the ProgressLoader
+          setUploading(false);
+
           console.error("File upload failed:", error);
           Swal.fire({
             icon: "error",
@@ -49,7 +61,7 @@ const ModuleUpload = () => {
           });
         });
     } else {
-      // console.log("No file selected.");
+      // Show an error message
       Swal.fire({
         icon: "error",
         title: "Failed",
@@ -62,7 +74,7 @@ const ModuleUpload = () => {
   return (
     <div
       style={{ backgroundImage: `url(${Background})`, backgroundSize: "cover" }}
-      className="w-full flex-col p-4 flex items-cente justify-center h-screen text-white"
+      className="w-full flex-col p-4 flex items-center justify-center h-screen text-white"
     >
       <div className="max-w-md mx-auto">
         <div className="flex items-center gap-4 mb-5">
@@ -72,7 +84,7 @@ const ModuleUpload = () => {
           </h1>
         </div>
         <div className="mb-4">
-          <label htmlFor="subjects" className="block  font-semibold">
+          <label htmlFor="subjects" className="block font-semibold">
             Subjects:
           </label>
           <select
@@ -87,18 +99,20 @@ const ModuleUpload = () => {
           </select>
         </div>
         <div className="bg-white p-12 shadow-lg rounded text-black">
-          <label className="block  text-lg font-bold mb-2">
+          <label className="block text-lg font-bold mb-2">
             Choose a file to upload module:
           </label>
           <input
             type="file"
-            accept=".pdf, .doc, .docx" // Define accepted file types
+            accept=".pdf, .doc, .docx"
             onChange={handleFileSelect}
-            className="border border-gray-300 rounded p-2 w-full cursor-pointer "
+            className="border border-gray-300 rounded p-2 w-full cursor-pointer"
           />
 
           <div className="mt-4">
-            {selectedFile ? (
+            {uploading ? (
+              <ProgressLoader />
+            ) : selectedFile ? (
               <div>
                 <p className="text-white">Selected file: {selectedFile.name}</p>
                 <button
