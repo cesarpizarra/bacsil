@@ -29,7 +29,7 @@ exports.register = async (req, res) => {
       role: req.body.role,
     });
     await user.save();
-    res.status(201).json({ message: "User Registered Successfully!" });
+    res.status(201).json({ message: "Registered Successfully!" });
   } catch (error) {
     console.log(error);
   }
