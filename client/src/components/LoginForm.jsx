@@ -96,8 +96,8 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
             </div>
 
             {error && (
-              <div className="p-2 bg-slate-100 mb-4">
-                <p lassName="text-red-500 text-sm py-2">{error}</p>
+              <div className="p-2 bg-slate-100 mb-4 text-red-500">
+                <p lassName="text-sm py-2">{error}</p>
               </div>
             )}
             <button

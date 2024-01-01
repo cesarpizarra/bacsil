@@ -1,7 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
 exports.register = async (req, res) => {
   try {
     const existingUser = await User.findOne({
@@ -155,5 +154,23 @@ exports.updatePassword = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Password update failed" });
+  }
+};
+
+exports.deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await User.findByIdAndDelete(id);
+
+    if (result) {
+      res.json({ message: "User deleted successfully" });
+    } else {
+      res.status(404).json({ message: "User not found" });
+      console.log(result);
+    }
+  } catch (error) {
+    console.log("Error", error);
+    res.status(500).json({ message: error.message });
   }
 };

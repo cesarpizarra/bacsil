@@ -30,7 +30,6 @@ const RegistrationForm = () => {
       middleName: "",
       lastName: "",
       password: "",
-      role: "",
     });
   };
 
