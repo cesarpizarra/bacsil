@@ -15,7 +15,7 @@ import SubjectDetails from "./pages/SubjectDetails";
 import StudentList from "./pages/StudentList";
 import ModuleUpload from "./pages/ModuleUpload";
 import ActivityUpload from "./pages/ActivityUpload";
-
+import { Toaster } from "react-hot-toast";
 const Loader = () => {
   return (
     <div>
@@ -62,6 +62,7 @@ const App = () => {
 
   return (
     <div>
+      <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
       {isloading ? (
         <Loader />
       ) : (

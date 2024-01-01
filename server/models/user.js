@@ -5,37 +5,37 @@ const userSchema = new mongoose.Schema({
   userId: {
     type: String,
     unique: true,
-    required: true,
+    required: [true, "LRN Number is required"],
   },
   username: {
     type: String,
     unique: true,
-    required: true,
+    required: [true, "Username is required"],
   },
   firstName: {
     type: String,
     unique: true,
-    required: true,
+    required: [true, "First Name is required"],
   },
   middleName: {
     type: String,
     unique: true,
-    required: true,
+    required: [true, "Middle Name is required"],
   },
 
   lastName: {
     type: String,
     unique: true,
-    required: true,
+    required: [true, "Last Name is required"],
   },
 
   password: {
     type: String,
-    required: true,
+    required: [true, "Password is required"],
   },
   role: {
     type: String,
-    required: true,
+    required: [true, "Role is required"],
     enum: ["teacher", "student"],
   },
 });

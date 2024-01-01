@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
 import Logo from "../assets/logo.jpg";
 
 const LoginForm = ({ onLogin, onRegisterClick }) => {
@@ -9,6 +8,7 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
     password: "",
     role: "student",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,41 +27,17 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
         formData
       );
 
-      if (response.status === 200) {
-        // Login was successful
-        Swal.fire({
-          icon: "success",
-          title: "Login Successful",
-          text: "Welcome back!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+      const { token } = response.data;
 
-        const { token } = response.data;
-
-        // Store the token in local storage
-        localStorage.setItem("token", token);
-        // Trigger the login callback and pass the selected role
-        onLogin(formData.role);
-      } else {
-        // Handle login failure
-        console.error("Login failed:", response.data.message);
-        Swal.fire({
-          icon: "error",
-          title: "Login Failed",
-          text: response.data.message,
-          showConfirmButton: true,
-        });
-      }
+      // Store the token in local storage
+      localStorage.setItem("token", token);
+      // Trigger the login callback and pass the selected role
+      onLogin(formData.role);
+      setError("");
     } catch (error) {
       // Handle error
       console.error("An error occurred while logging in:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Login Failed",
-        text: "Invalid id, password or role.",
-        showConfirmButton: true,
-      });
+      setError(error.response.data.message);
     }
   };
 
@@ -79,7 +55,7 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="id" className="block  font-semibold">
-                ID Number:
+                LRN Number:
               </label>
               <input
                 type="text"
@@ -118,6 +94,12 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
                 <option value="teacher">Teacher</option>
               </select>
             </div>
+
+            {error && (
+              <div className="p-2 bg-slate-100 mb-4">
+                <p lassName="text-red-500 text-sm py-2">{error}</p>
+              </div>
+            )}
             <button
               type="submit"
               className="bg-black text-white rounded py-2 px-4 hover-bg-gray-800 w-full"

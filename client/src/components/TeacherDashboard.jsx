@@ -40,7 +40,7 @@ const TeacherDashboard = ({ userId }) => {
     // Fetch user information when the component mounts
     if (userId) {
       axios
-        .get(`http://localhost:3000/bacsil/info/${userId}`) // Adjust the API endpoint to your server
+        .get(`http://localhost:3000/bacsil/info/${userId}`)
         .then((response) => {
           const { firstName, middleName, lastName } = response.data;
           const fullName = `${firstName} ${middleName} ${lastName}`;

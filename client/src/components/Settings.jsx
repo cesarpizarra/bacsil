@@ -17,6 +17,7 @@ const Settings = ({ isOpen, onClose }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem("token");
+        localStorage.removeItem("userRole");
 
         setTimeout(() => {
           window.location.href = "/";

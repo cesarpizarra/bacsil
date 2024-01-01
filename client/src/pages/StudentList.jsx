@@ -26,7 +26,7 @@ const StudentList = ({ token }) => {
           (user) => user.role === "student"
         );
         setStudents(studentData);
-        console.log("studens", studentData);
+        // console.log("studens", studentData);
       }
     } catch (error) {
       console.error("Fetch students error:", error);

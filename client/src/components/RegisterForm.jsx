@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import LoginForm from "./LoginForm";
-import Swal from "sweetalert2";
 import Logo from "../assets/logo.jpg";
-
+import { toast } from "react-hot-toast";
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
     userId: "",
@@ -14,9 +13,8 @@ const RegistrationForm = () => {
     password: "",
     role: "student", // Default role
   });
-
   const [showLogin, setShowLogin] = useState(false);
-
+  const [error, setError] = useState("");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -40,57 +38,17 @@ const RegistrationForm = () => {
     e.preventDefault();
 
     try {
-      if (!formData) {
-        Swal.fire({
-          icon: "error",
-          title: "Login Failed",
-          text: "Please select a grade and section",
-          showConfirmButton: true,
-        });
-        return;
-      }
       const response = await Axios.post(
         "http://localhost:3000/bacsil/register",
         formData
       );
 
-      if (response.status === 201) {
-        // Registration was successful
-        console.log("User registered successfully!");
-
-        Swal.fire({
-          icon: "success",
-          title: "Registered ",
-          text: "Registered Successfuly",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-
-        setFormData({
-          userId: "",
-          username: "",
-          firstName: "",
-          middleName: "",
-          lastName: "",
-          password: "",
-          role: "",
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops!",
-          text: "Registration Failed",
-          showConfirmButton: true,
-        });
-      }
+      toast.success(response.data.message);
+      setError("");
+      resetForm();
     } catch (error) {
       console.error("An error occurred while registering:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Register Failed",
-        text: "Account already exists",
-        showConfirmButton: true,
-      });
+      setError(error.response.data.message);
     }
   };
 
@@ -113,99 +71,108 @@ const RegistrationForm = () => {
       <div className="border p-8 rounded shadow-md shadow-gray-400 w-full max-w-lg">
         <h1 className="text-2xl font-bold mb-4 text-black">Registration</h1>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="userId" className="block text-black font-semibold">
-              User ID:
-            </label>
-            <input
-              type="text"
-              id="userId"
-              name="userId"
-              value={formData.userId}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded p-2 outline-none"
-            />
+          <div className="flex gap-5">
+            <div className="mb-4">
+              <label
+                htmlFor="userId"
+                className="block text-black font-semibold"
+              >
+                LRN Number:
+              </label>
+              <input
+                type="text"
+                id="userId"
+                name="userId"
+                value={formData.userId}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded p-2 outline-none"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="username"
+                className="block text-black font-semibold"
+              >
+                Username:
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded p-2 outline-none"
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-black font-semibold"
-            >
-              Username:
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded p-2 outline-none"
-            />
+          <div className="flex gap-5">
+            <div className="mb-4">
+              <label
+                htmlFor="firstName"
+                className="block text-black font-semibold"
+              >
+                First Name:
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded p-2 outline-none"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="middleName"
+                className="block text-black font-semibold"
+              >
+                Middle Name:
+              </label>
+              <input
+                type="text"
+                id="middleName"
+                name="middleName"
+                value={formData.middleName}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded p-2 outline-none"
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="firstName"
-              className="block text-black font-semibold"
-            >
-              First Name:
-            </label>
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded p-2 outline-none"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="middleName"
-              className="block text-black font-semibold"
-            >
-              Middle Name:
-            </label>
-            <input
-              type="text"
-              id="middleName"
-              name="middleName"
-              value={formData.middleName}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded p-2 outline-none"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="lastName"
-              className="block text-black font-semibold"
-            >
-              Last Name:
-            </label>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded p-2 outline-none"
-            />
-          </div>
+          <div className="flex gap-5">
+            <div className="mb-4">
+              <label
+                htmlFor="lastName"
+                className="block text-black font-semibold"
+              >
+                Last Name:
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded p-2 outline-none"
+              />
+            </div>
 
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-black font-semibold"
-            >
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded p-2 outline-none"
-            />
+            <div className="mb-4">
+              <label
+                htmlFor="password"
+                className="block text-black font-semibold"
+              >
+                Password:
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded p-2 outline-none"
+              />
+            </div>
           </div>
           <div className="mb-4">
             <label htmlFor="role" className="block text-black font-semibold">
@@ -222,6 +189,16 @@ const RegistrationForm = () => {
               <option value="teacher">Teacher</option>
             </select>
           </div>
+          {error && (
+            <div className="p-2 bg-slate-100 mb-4">
+              {error.split(", ").map((errorMessage, index) => (
+                <p key={index} className="text-red-500 text-sm py-2">
+                  {errorMessage}
+                </p>
+              ))}
+            </div>
+          )}
+
           <div className="flex flex-col gap-2">
             <button
               type="reset"

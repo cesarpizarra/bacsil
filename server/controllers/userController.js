@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const mongoose = require("mongoose");
 exports.register = async (req, res) => {
   try {
     const existingUser = await User.findOne({
@@ -31,7 +31,17 @@ exports.register = async (req, res) => {
     await user.save();
     res.status(201).json({ message: "Registered Successfully!" });
   } catch (error) {
-    console.log(error);
+    if (error.name === "ValidationError") {
+      const errorMessages = Object.values(error.errors).map(
+        (err) => err.message
+      );
+      console.log("Validation Error: ", errorMessages);
+
+      return res.status(400).json({ message: errorMessages.join(", ") });
+    }
+
+    console.error("Error ", error.message);
+    res.status(500).json({ message: "Error Registering" });
   }
 };
 
@@ -46,7 +56,7 @@ exports.login = async (req, res) => {
     }
 
     if (!user) {
-      return res.status(404).json({ message: "Login Failed" });
+      return res.status(404).json({ message: "Acccount doesn't exist." });
     }
 
     // Check if the selected role matches the user's role
