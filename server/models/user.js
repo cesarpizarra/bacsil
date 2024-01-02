@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: [true, "LRN Number is required"],
+    minLength: [12, "LRN must be larger than 12 numbers"],
   },
   username: {
     type: String,

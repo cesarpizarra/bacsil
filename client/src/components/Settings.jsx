@@ -16,8 +16,7 @@ const Settings = ({ isOpen, onClose }) => {
       confirmButtonText: "Yes, logout",
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("userRole");
+        localStorage.removeItem("credentials");
 
         setTimeout(() => {
           window.location.href = "/";

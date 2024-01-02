@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BiArrowBack } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 const StudentList = ({ token }) => {
@@ -48,13 +48,11 @@ const StudentList = ({ token }) => {
     }
   };
   return (
-    <div className="w-full px-4 py-10 max-w-[1240px] mx-auto">
+    <div className="w-full px-4 py-10">
       <div className="flex items-center gap-4">
-        <BiArrowBack
-          size={25}
-          className="cursor-pointer"
-          onClick={goBackToDashboard}
-        />
+        <Link to="/teacher">
+          <BiArrowBack size={25} className="cursor-pointer" />
+        </Link>
         <h1 className="txt-lg md:text-2xl font-semibold">Student List</h1>
       </div>
 
@@ -62,8 +60,9 @@ const StudentList = ({ token }) => {
         <p className="py-12 text-center text-red-500"> No List of Students</p>
       ) : (
         <table className="w-full table-auto mt-6">
-          <thead className=" text-left bg-gray-500 text-white">
+          <thead className=" text-left text-black">
             <tr className="">
+              <th className="py-2">LRN Number</th>
               <th className="py-2 px-2">First Name</th>
               <th className="py-2">Middle Name</th>
               <th className="py-2">Last Name</th>
@@ -73,12 +72,10 @@ const StudentList = ({ token }) => {
           <tbody>
             {students.map((student, i) => (
               <tr key={i}>
+                <td className="py-2">{student.userId}</td>
                 <td className="py-2">{student.firstName}</td>
                 <td className="py-2">{student.middleName}</td>
                 <td className="py-2">{student.lastName}</td>
-                <td className="py-2">{student.lastName}</td>
-                <td className="py-2">{student._id}</td>
-
                 <td className="py-2">
                   <button
                     onClick={() => deleteStudent(student._id)}

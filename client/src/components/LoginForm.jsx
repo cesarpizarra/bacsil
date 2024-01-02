@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Logo from "../assets/logo.jpg";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-const LoginForm = ({ onLogin, onRegisterClick }) => {
+const LoginForm = () => {
   const [formData, setFormData] = useState({
     userId: "",
     password: "",
     role: "student",
   });
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -27,12 +29,21 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
         formData
       );
 
-      const { token } = response.data;
+      localStorage.setItem("credentials", JSON.stringify(response.data));
 
-      // Store the token in local storage
-      localStorage.setItem("token", token);
-      // Trigger the login callback and pass the selected role
-      onLogin(formData.role);
+      toast.success(response.data.message);
+      // console.log(response.data);
+      switch (formData.role) {
+        case "student":
+          navigate("/student");
+          break;
+        case "teacher":
+          navigate("/teacher");
+          break;
+
+        default:
+          break;
+      }
       setError("");
     } catch (error) {
       // Handle error
@@ -64,6 +75,7 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
                 value={formData.userId}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded p-2 outline-none"
+                required
               />
             </div>
             <div className="mb-4">
@@ -77,6 +89,7 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded p-2 outline-none"
+                required
               />
             </div>
             <div className="mb-4">
@@ -97,7 +110,7 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
 
             {error && (
               <div className="p-2 bg-slate-100 mb-4 text-red-500">
-                <p lassName="text-sm py-2">{error}</p>
+                <p className="text-sm py-2">{error}</p>
               </div>
             )}
             <button
@@ -109,12 +122,9 @@ const LoginForm = ({ onLogin, onRegisterClick }) => {
           </form>
           <p className="text-center text-sm mt-3">
             Not registered?{" "}
-            <span
-              className="text-red-500 cursor-pointer"
-              onClick={onRegisterClick}
-            >
+            <Link to="/register" className="text-red-500 cursor-pointer">
               Register here.
-            </span>
+            </Link>
           </p>
         </div>
       </div>

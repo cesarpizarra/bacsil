@@ -12,7 +12,7 @@ const items = [
   {
     id: 1,
     title: "List of Students",
-    path: "/students",
+    path: "/student-list",
     icon: <AiOutlineOrderedList size={35} />,
     background: Students,
   },
@@ -34,25 +34,18 @@ const items = [
 const TeacherDashboard = ({ userId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
-  const [fullName, setFullName] = useState("");
+
+  const [firstName, setFirstName] = useState("");
 
   useEffect(() => {
-    // Fetch user information when the component mounts
-    if (userId) {
-      axios
-        .get(`http://localhost:3000/bacsil/info/${userId}`)
-        .then((response) => {
-          const { firstName, middleName, lastName } = response.data;
-          const fullName = `${firstName} ${middleName} ${lastName}`;
-          setFullName(fullName);
-        })
-        .catch((error) => {
-          console.error("Error fetching user information:", error);
-        });
-    } else {
-      console.log("User Not Logged In");
+    // Fetch user details from local storage
+    const credentials = localStorage.getItem("credentials");
+
+    if (credentials) {
+      const { firstName: storedFirstName } = JSON.parse(credentials);
+      setFirstName(storedFirstName);
     }
-  }, [userId]);
+  }, []);
 
   // Function to open the modal
   const openModal = () => {
@@ -65,11 +58,15 @@ const TeacherDashboard = ({ userId }) => {
   };
   return (
     <div className="w-full px-4 py-10 max-w-[1240px] mx-auto ">
-      <div className="flex items-center gap-5 ">
-        <img src={Logo} alt="Logo" className="w-24 " />
-        <h3 className="text-lg md:text-2xl">Bacsil Online Learning </h3>
+      <div className="flex flex-col gap-5 ">
+        <div className="flex items-center gap-5">
+          <img src={Logo} alt="Logo" className="w-20" />
+          <h1 className="text-xl md:text-3xl font-semibold">
+            Bacsil Classroom
+          </h1>
+        </div>
+        <p className="py-4 text-2xl">Welcome {firstName}!</p>
       </div>
-      <h1 className="text-lg font-semibold py-4 ">Welcome {fullName}</h1>
 
       <div className="w-full  shadow-md rounded-lg relative">
         <div className="grid md:grid-cols-2 p-12 gap-10 ">

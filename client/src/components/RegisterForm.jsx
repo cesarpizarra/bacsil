@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Axios from "axios";
-import LoginForm from "./LoginForm";
 import Logo from "../assets/logo.jpg";
 import { toast } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
     userId: "",
@@ -11,9 +12,8 @@ const RegistrationForm = () => {
     middleName: "",
     lastName: "",
     password: "",
-    role: "student", // Default role
+    role: "student",
   });
-  const [showLogin, setShowLogin] = useState(false);
   const [error, setError] = useState("");
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,6 +33,7 @@ const RegistrationForm = () => {
     });
   };
 
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -44,20 +45,13 @@ const RegistrationForm = () => {
 
       toast.success(response.data.message);
       setError("");
+      navigate("/");
       resetForm();
     } catch (error) {
       console.error("An error occurred while registering:", error);
       setError(error.response.data.message);
     }
   };
-
-  const handleToggleLogin = () => {
-    setShowLogin(!showLogin);
-  };
-
-  if (showLogin) {
-    return <LoginForm onRegisterClick={handleToggleLogin} />;
-  }
 
   return (
     <div className=" min-h-screen animate__animated animate__backInRight flex flex-col items-center justify-center px-8 w-full max-w-[1240px] mx-auto ">
@@ -216,12 +210,9 @@ const RegistrationForm = () => {
         </form>
         <p className="text-center  text-sm mt-3 cursor-pointer">
           Already registered?{" "}
-          <span
-            className="text-red-500 cursor-pointer"
-            onClick={handleToggleLogin}
-          >
+          <Link to="/" className="text-red-500 cursor-pointer">
             Login here.
-          </span>
+          </Link>
         </p>
       </div>
     </div>

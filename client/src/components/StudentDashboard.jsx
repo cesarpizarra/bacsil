@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { GrUserSettings } from "react-icons/gr";
@@ -29,6 +29,18 @@ const StudentDashboard = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [firstName, setFirstName] = useState("");
+
+  useEffect(() => {
+    // Fetch user details from local storage
+    const credentials = localStorage.getItem("credentials");
+
+    if (credentials) {
+      const { firstName: storedFirstName } = JSON.parse(credentials);
+      setFirstName(storedFirstName);
+    }
+  }, []);
+
   // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
@@ -41,9 +53,14 @@ const StudentDashboard = () => {
 
   return (
     <div className="w-full p-6 max-w-[1240px] mx-auto relative">
-      <div className="flex items-center  gap-5 py-8">
-        <img src={Logo} alt="Logo" className="w-20" />
-        <h1 className="text-xl md:text-3xl font-semibold">Bacsil Classroom</h1>
+      <div className="flex flex-col gap-5 ">
+        <div className="flex items-center gap-5">
+          <img src={Logo} alt="Logo" className="w-20" />
+          <h1 className="text-xl md:text-3xl font-semibold">
+            Bacsil Classroom
+          </h1>
+        </div>
+        <p className="py-4 text-2xl">Welcome {firstName}!</p>
       </div>
       {classes.map((cls) => (
         <div

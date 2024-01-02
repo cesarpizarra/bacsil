@@ -55,7 +55,7 @@ exports.login = async (req, res) => {
     }
 
     if (!user) {
-      return res.status(404).json({ message: "Acccount doesn't exist." });
+      return res.status(404).json({ message: "Invalid LRN" });
     }
 
     // Check if the selected role matches the user's role
@@ -85,6 +85,14 @@ exports.login = async (req, res) => {
       lastName,
     });
   } catch (error) {
+    if (error.name === "ValidationError") {
+      const errorMessages = Object.values(error.errors).map(
+        (err) => err.message
+      );
+      console.log("Validation Error: ", errorMessages);
+
+      return res.status(400).json({ message: errorMessages.join(", ") });
+    }
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
