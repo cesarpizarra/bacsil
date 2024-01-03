@@ -12,6 +12,7 @@ import StudentList from "./pages/StudentList";
 import ModuleUpload from "./pages/ModuleUpload";
 import ActivityUpload from "./pages/ActivityUpload";
 import { Toaster } from "react-hot-toast";
+import UpdateUser from "./pages/UpdateUser";
 const Loader = () => {
   return (
     <div>
@@ -34,6 +35,10 @@ const App = () => {
           <Route path="/student" element={<StudentDashboard />} />
           <Route path="/teacher" element={<TeacherDashboard />} />
           <Route path="/student-list" element={<StudentList />} />
+          <Route path="/subject/:id" element={<SubjectDetails />} />
+          <Route path="/upload-module" element={<ModuleUpload />} />
+          <Route path="/upload-activity" element={<ActivityUpload />} />
+          <Route path="/update-user/:id" element={<UpdateUser />} />
         </Routes>
       </Router>
     </div>

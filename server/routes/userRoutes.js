@@ -18,5 +18,6 @@ router.get("/info/:userId", userController.info);
 // Updar user Route
 router.post("/update-password", userController.updatePassword);
 router.delete("/delete/:id", userController.deleteUser);
+router.put("/update/:id", userController.updateUser);
 
 module.exports = router;

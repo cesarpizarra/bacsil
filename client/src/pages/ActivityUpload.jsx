@@ -3,6 +3,8 @@ import axios from "axios";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import Background from "../assets/tasks.jpg";
+import { Link } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
 
 const ActivityForm = () => {
   const [formData, setFormData] = useState({
@@ -33,7 +35,7 @@ const ActivityForm = () => {
         formData
       );
       if (response.status === 200) {
-        Swal.fire("Success", "Activity saved successfully", "success");
+        Swal.fire("Success", "Activity uploaded successfully", "success");
       }
       setFormData({
         name: "",
@@ -48,9 +50,15 @@ const ActivityForm = () => {
   return (
     <div
       style={{ backgroundImage: `url(${Background})`, backgroundSize: "cover" }}
-      className="flex items-center justify-center h-screen px-4 w-full"
+      className="flex flex-col items-center justify-center h-screen px-4 w-full"
     >
       <div className="w-full max-w-xl mx-auto bg-white p-8 shadow-md rounded-md">
+        <Link to="/teacher">
+          <div className="flex items-center pb-12">
+            <BiArrowBack size={25} className="cursor-pointer" />
+            <p>Back</p>
+          </div>
+        </Link>
         <h1 className="text-md md:text-2xl font-bold mb-4">Upload Activity</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

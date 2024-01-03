@@ -7,7 +7,7 @@ import { GrUserSettings } from "react-icons/gr";
 import Students from "../assets/students.jpg";
 import Tasks from "../assets/tasks.jpg";
 import Books from "../assets/books.jpg";
-import axios from "axios";
+
 const items = [
   {
     id: 1,
@@ -31,10 +31,8 @@ const items = [
     background: Tasks,
   },
 ];
-const TeacherDashboard = ({ userId }) => {
+const TeacherDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hoveredItem, setHoveredItem] = useState(null);
-
   const [firstName, setFirstName] = useState("");
 
   useEffect(() => {
@@ -71,19 +69,11 @@ const TeacherDashboard = ({ userId }) => {
       <div className="w-full  shadow-md rounded-lg relative">
         <div className="grid md:grid-cols-2 p-12 gap-10 ">
           {items.map((item) => (
-            <Link
-              key={item.id}
-              to={item.path}
-              onMouseEnter={() => setHoveredItem(item.id)}
-              onMouseLeave={() => setHoveredItem(null)}
-            >
+            <Link key={item.id} to={item.path}>
               <div
                 style={{
                   backgroundImage: `url(${item.background})`,
                   backgroundSize: "cover",
-                  transform:
-                    hoveredItem === item.id ? "scale(1.1)" : "scale(1)",
-                  transition: "transform 0.3s ease",
                 }}
                 className="text-white cursor-pointer rounded  p-24 flex flex-col gap-5 items-center justify-center"
               >
