@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import RegistrationForm from "./components/RegisterForm";
@@ -24,24 +24,40 @@ const Loader = () => {
 };
 
 const App = () => {
-  return (
-    <div>
-      <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
+  const [isLoading, setIsLoading] = useState(true);
 
-      <Router>
-        <Routes>
-          <Route path="/" element={<LoginForm />} />
-          <Route path="/register" element={<RegistrationForm />} />
-          <Route path="/student" element={<StudentDashboard />} />
-          <Route path="/teacher" element={<TeacherDashboard />} />
-          <Route path="/student-list" element={<StudentList />} />
-          <Route path="/subject/:id" element={<SubjectDetails />} />
-          <Route path="/upload-module" element={<ModuleUpload />} />
-          <Route path="/upload-activity" element={<ActivityUpload />} />
-          <Route path="/update-user/:id" element={<UpdateUser />} />
-        </Routes>
-      </Router>
-    </div>
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  return (
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div>
+          <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
+
+          <Router>
+            <Routes>
+              <Route path="/" element={<LoginForm />} />
+              <Route path="/register" element={<RegistrationForm />} />
+              <Route path="/student" element={<StudentDashboard />} />
+              <Route path="/teacher" element={<TeacherDashboard />} />
+              <Route path="/student-list" element={<StudentList />} />
+              <Route path="/subject/:id" element={<SubjectDetails />} />
+              <Route path="/upload-module" element={<ModuleUpload />} />
+              <Route path="/upload-activity" element={<ActivityUpload />} />
+              <Route path="/update-user/:id" element={<UpdateUser />} />
+            </Routes>
+          </Router>
+        </div>
+      )}
+    </>
   );
 };
 
