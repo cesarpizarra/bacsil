@@ -11,8 +11,6 @@ const StudentList = () => {
     try {
       const response = await axios.get(`http://localhost:3000/bacsil/users`);
 
-      // console.log("API Response:", response.data);
-
       if (response.status === 200) {
         const studentData = response.data.filter(
           (user) => user.role === "student"
