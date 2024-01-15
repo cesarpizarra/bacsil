@@ -31,7 +31,7 @@ const ActivityForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/activity/upload",
+        "https://bacsil.onrender.com/activity/upload",
         formData
       );
       if (response.status === 200) {

@@ -22,7 +22,7 @@ const UpdateUser = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.put(
-          `http://localhost:3000/bacsil/update/${id}`
+          `https://bacsil.onrender.com/bacsil/update/${id}`
         );
 
         if (response.status === 200) {
@@ -41,7 +41,7 @@ const UpdateUser = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:3000/bacsil/update/${id}`,
+        `https://bacsil.onrender.com/bacsil/update/${id}`,
         formData
       );
       navigate("/student-list");

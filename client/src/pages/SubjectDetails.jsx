@@ -18,7 +18,7 @@ const SubjectDetails = () => {
     const fetchModules = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/files/subject/${subjectTitle}`
+          `https://bacsil.onrender.com/files/subject/${subjectTitle}`
         );
         setModules(response.data);
         // console.log(response.data);
@@ -33,7 +33,7 @@ const SubjectDetails = () => {
     const fetchActivities = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/activity/activities/${subjectTitle}`
+          `https://bacsil.onrender.com/activity/activities/${subjectTitle}`
         );
         setActivities(response.data);
         // console.log(response.data);
@@ -45,7 +45,7 @@ const SubjectDetails = () => {
   }, []);
   const downloadFile = (fileId, filename) => {
     axios
-      .get(`http://localhost:3000/files/download/${fileId}`, {
+      .get(`https://bacsil.onrender.com/files/download/${fileId}`, {
         responseType: "blob", // This ensures the response is treated as a binary blob
       })
       .then((response) => {

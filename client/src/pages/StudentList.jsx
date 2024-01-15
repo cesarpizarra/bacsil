@@ -9,7 +9,9 @@ const StudentList = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/bacsil/users`);
+      const response = await axios.get(
+        `https://bacsil.onrender.com/bacsil/users`
+      );
 
       if (response.status === 200) {
         const studentData = response.data.filter(
@@ -40,7 +42,7 @@ const StudentList = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:3000/bacsil/delete/${id}`);
+        await axios.delete(`https://bacsil.onrender.com/bacsil/delete/${id}`);
         // console.log(response.data);
 
         Swal.fire({

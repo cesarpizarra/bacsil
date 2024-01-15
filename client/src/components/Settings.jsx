@@ -51,7 +51,7 @@ const Settings = ({ isOpen, onClose }) => {
     ) {
       // Send a request to change the password
       axios
-        .post("http://localhost:3000/bacsil/update-password", formValues)
+        .post("https://bacsil.onrender.com/bacsil/update-password", formValues)
         .then((response) => {
           // Handle success, e.g., show a success message
           Swal.fire("Password changed successfully", "", "success");

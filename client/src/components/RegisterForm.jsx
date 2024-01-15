@@ -39,7 +39,7 @@ const RegistrationForm = () => {
 
     try {
       const response = await Axios.post(
-        "http://localhost:3000/bacsil/register",
+        "https://bacsil.onrender.com/bacsil/register",
         formData
       );
 
@@ -64,7 +64,7 @@ const RegistrationForm = () => {
       <div className="border p-8 rounded shadow-md shadow-gray-400 w-full max-w-lg">
         <h1 className="text-2xl font-bold mb-4 text-black">Registration</h1>
         <form onSubmit={handleSubmit}>
-          <div className="flex gap-5">
+          <div className="md:flex gap-5">
             <div className="mb-4">
               <label
                 htmlFor="userId"
@@ -98,7 +98,7 @@ const RegistrationForm = () => {
               />
             </div>
           </div>
-          <div className="flex gap-5">
+          <div className="md:flex gap-5">
             <div className="mb-4">
               <label
                 htmlFor="firstName"
@@ -132,7 +132,7 @@ const RegistrationForm = () => {
               />
             </div>
           </div>
-          <div className="flex gap-5">
+          <div className="md:flex gap-5">
             <div className="mb-4">
               <label
                 htmlFor="lastName"

@@ -35,7 +35,7 @@ const ModuleUpload = () => {
 
       // Send a POST request to the server
       axios
-        .post("http://localhost:3000/upload/file", formData)
+        .post("https://bacsil.onrender.com/upload/file", formData)
         .then((response) => {
           setTimeout(() => {
             // Hide the ProgressLoader
